@@ -3,7 +3,8 @@
 
 
 // Plot struct
-typedef struct {
+typedef struct
+{
 //	plotState State;
 	int Age;
 	int Health;
@@ -14,7 +15,8 @@ typedef struct {
 
 
 // Farm struct represents the collection of all of the plots and the properties of the farm
-typedef struct {
+typedef struct
+{
 //	plot_t Plots[NUMPLOTS];
 	int Money;
 	int MonthsPassed;
@@ -22,7 +24,6 @@ typedef struct {
 	int CropHealth;
 
 	// add more members if you need
-
 } farm_t;
 
 // Initialize the farm struct

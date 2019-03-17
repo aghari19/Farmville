@@ -3,7 +3,8 @@
 #include "Farm.h"
 
 // Initialize the
-void Farm_init(farm_t *farm) {
+void Farm_init(farm_t *farm)
+{
 
     // Farm starts with  full money
     farm->Money = 3;
