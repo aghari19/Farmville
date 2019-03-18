@@ -22,6 +22,7 @@ typedef struct
 	int MonthsPassed;
 	int DaysPassed;
 	int CropHealth;
+	char Difficulty;
 
 	// add more members if you need
 } farm_t;

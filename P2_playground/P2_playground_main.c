@@ -9,8 +9,13 @@
 
 void initialize();
 void InitTimer();
-void makeToString(farm_t farm, int8_t string);
+void startTimer0();
+
+void makeToString(farm_t farm, int8_t *string);
+void increaseTime(farm_t farm);
+
 void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
+
 
 int main(void)
 {
@@ -52,46 +57,9 @@ int main(void)
     while (1)
     {
         if (UARTHasChar(EUSCI_A0_BASE))
-                 {
-                     rChar = UARTGetChar(EUSCI_A0_BASE);
-                     i++;
-
-                     // Depending on if the received char is a Number, a Letter, or Otherwise,
-                     // the transmit char is N, L or O
-                     if (('0'<=rChar) && (rChar <= '9'))
-                         tChar = 'N';
-                     else if ((('a'<=rChar) && (rChar <= 'z')) ||
-                             (('A'<=rChar) && (rChar <= 'Z')))
-                         tChar = 'L';
-                     else
-                         tChar = 'O';
-
-                     if (UARTCanSend(EUSCI_A0_BASE))
-                         UARTPutChar(EUSCI_A0_BASE, tChar);
-                 }
-
-                 switch (i)
-                 {
-                 // After analyzing 5 characters, it switches the speed to 19600
-                 case 5:
-                     UARTSetBaud(EUSCI_A0_BASE,
-                                 &uartConfig,
-                                 baud19200);
-                     i++;
-                     break;
-
-                 case 10:
-                     UARTSetBaud(EUSCI_A0_BASE,
-                                 &uartConfig,
-                                 baud38400);
-                     i++;
-                     break;
-                 case 15:
-                     UARTSetBaud(EUSCI_A0_BASE,
-                                 &uartConfig,
-                                 baud57600);
-                 }
-
+        {
+            rChar = UARTGetChar(EUSCI_A0_BASE);
+            i++;
     }
 
 }
@@ -117,9 +85,33 @@ void display(Graphics_Context *g_sContext_p, int8_t *timeString,
 }
 
 
-void makeToString(farm_t farm, int8_t string)
+void makeToString(farm_t farm, int8_t *string)
 {
+    string[4] = (farm.DaysPassed % 10) + 48;
+    string[3] = ((farm.DaysPassed / 10) % 10) + 48;
+    string[1] = (farm.MonthsPassed % 10) + 48;
+    string[0] = ((farm.MonthsPassed / 10) % 10) + 48;
+}
 
+void increaseTime(farm_t farm)
+{
+    if(farm.Difficulty == 'E')
+    {
+        farm.DaysPassed = farm.DaysPassed+ 1;
+        if(farm.DaysPassed == 15)
+        {
+            farm.DaysPassed = 0;
+            farm.MonthsPassed =farm.MonthsPassed + 1;
+        }
+    }
+    else if(farm.Difficulty == 'M')
+    {
+
+    }
+    else if(farm.Difficulty == 'H')
+    {
+
+    }
 }
 
 
@@ -133,6 +125,12 @@ void InitTimer()
     Timer32_initModule(TIMER32_1_BASE, TIMER32_PRESCALER_1, TIMER32_32BIT, TIMER32_PERIODIC_MODE);
     Timer32_startTimer(TIMER32_1_BASE, true);
     Timer32_setCount(TIMER32_1_BASE, 1);
+}
+
+void startTimer0()
+{
+    Timer32_setCount(TIMER32_0_BASE, TENTH_SEC_COUNT);
+    Timer32_startTimer(TIMER32_0_BASE, true);
 }
 
 

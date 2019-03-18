@@ -13,7 +13,7 @@ void Farm_init(farm_t *farm)
 
     // Remains Zero Until Planting
     farm->CropHealth = 0;
-
+    farm->Difficulty = 'E';
     // complete this function once you have more members for the farm struct
 
 }
