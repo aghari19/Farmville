@@ -7,12 +7,20 @@
 #include "Farm.h"
 // include all other .h files
 
+#define LOAD_E 24000000
+#define LOAD_M 16000000
+#define LOAD_H 8000000
+
+
 void initialize();
 void InitTimer();
-void startTimer0();
+bool timer0Expired();
+void startTimerE();
+void startTimerM();
+void startTimerH();
 
 void makeToString(farm_t farm, int8_t *string);
-void increaseTime(farm_t farm);
+void increaseTime(farm_t *farm);
 
 void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
 
@@ -56,12 +64,14 @@ int main(void)
 
     while (1)
     {
-        if (UARTHasChar(EUSCI_A0_BASE))
+        if (UARTHasChar(EUSCI_A0_BASE) && timer0Expired())
         {
-            rChar = UARTGetChar(EUSCI_A0_BASE);
-            i++;
+            startTimerE();
+            increaseTime(&farm);
+            makeToString(farm, timeString);
+            display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
+        }
     }
-
 }
 
 void display(Graphics_Context *g_sContext_p, int8_t *timeString,
@@ -93,24 +103,13 @@ void makeToString(farm_t farm, int8_t *string)
     string[0] = ((farm.MonthsPassed / 10) % 10) + 48;
 }
 
-void increaseTime(farm_t farm)
+void increaseTime(farm_t *farm)
 {
-    if(farm.Difficulty == 'E')
+    farm->DaysPassed = farm->DaysPassed + 1;
+    if (farm->DaysPassed == 30)
     {
-        farm.DaysPassed = farm.DaysPassed+ 1;
-        if(farm.DaysPassed == 15)
-        {
-            farm.DaysPassed = 0;
-            farm.MonthsPassed =farm.MonthsPassed + 1;
-        }
-    }
-    else if(farm.Difficulty == 'M')
-    {
-
-    }
-    else if(farm.Difficulty == 'H')
-    {
-
+        farm->DaysPassed = 0;
+        farm->MonthsPassed = farm->MonthsPassed + 1;
     }
 }
 
@@ -127,12 +126,28 @@ void InitTimer()
     Timer32_setCount(TIMER32_1_BASE, 1);
 }
 
-void startTimer0()
+void startTimerE()
 {
-    Timer32_setCount(TIMER32_0_BASE, TENTH_SEC_COUNT);
+    Timer32_setCount(TIMER32_0_BASE, LOAD_E);
     Timer32_startTimer(TIMER32_0_BASE, true);
 }
 
+void startTimerM()
+{
+    Timer32_setCount(TIMER32_0_BASE, LOAD_M);
+    Timer32_startTimer(TIMER32_0_BASE, true);
+}
+
+void startTimerH()
+{
+    Timer32_setCount(TIMER32_0_BASE, LOAD_H);
+    Timer32_startTimer(TIMER32_0_BASE, true);
+}
+
+bool timer0Expired()
+{
+    return (Timer32_getValue(TIMER32_0_BASE) == 0);
+}
 
 void initialize()
 {
