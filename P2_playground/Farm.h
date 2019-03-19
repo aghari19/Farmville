@@ -17,7 +17,7 @@ typedef struct
 // Farm struct represents the collection of all of the plots and the properties of the farm
 typedef struct
 {
-//	plot_t Plots[NUMPLOTS];
+	plot_t Plots[6];
 	int Money;
 	int MonthsPassed;
 	int DaysPassed;

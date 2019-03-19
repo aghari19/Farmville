@@ -26,6 +26,10 @@ void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p);
 
 void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
 void movePlots(Graphics_Rectangle *R, uint8_t rChar , Graphics_Context *g_sContext_p);
+void Plot_init(Graphics_Rectangle *R, Graphics_Context *g_sContext_p);
+
+void plots();
+bool isEmpty(Graphics_Rectangle *R, farm_t *farm);
 
 int main(void)
 {
@@ -36,15 +40,18 @@ int main(void)
 
     farm_t farm;
     Graphics_Rectangle R;
+
     Farm_init(&farm);
 
 
     int8_t timeString[6] = "00:00";
-    int8_t MoneyString[11] = "Money:  00";
+    int8_t MoneyString[11] = "Money:  03";
     int8_t HealthString[11] = "Health: 00";
     int8_t DifficultyString[2] = "E";
 
     display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
+    Plot_init(&R, &g_sContext);
+
 
     eUSCI_UART_Config uartConfig =
        {
@@ -93,7 +100,10 @@ int main(void)
                         movePlots(&R, rChar, &g_sContext);
                         break;
             case 'p':
-
+                        if(isEmpty(&R, &farm))
+                        {
+                            plots(&farm);
+                        }
                         break;
             case 'r':
                         break;
@@ -106,20 +116,44 @@ int main(void)
     }
 }
 
+bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
+{
+    if((R->xMax == 40) && (R->yMax == 60))//The first Plot in the array it is the second plot
+    {
+
+    }
+    else if((R->xMax == 80) && (R->yMax == 60))
+    {
+
+    }
+    else if((R->xMax == 120) && (R->yMax == 60))
+    {
+
+    }
+    else if ((R->xMax == 40) && (R->yMax == 100))
+    {
+
+    }
+    else if ((R->xMax == 80) && (R->yMax == 100))
+    {
+
+    }
+    else if ((R->xMax == 120) && (R->yMax == 100))
+    {
+
+    }
+    return true;
+}
+
+void plots()
+{
+
+}
 void movePlots(Graphics_Rectangle *R, uint8_t rChar, Graphics_Context *g_sContext_p)
 {
-    R->xMin = 0;
-    R->xMax = 40;
-    R->yMin = 20;
-    R->yMax = 60;
-
-    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
-    Graphics_drawRectangle(g_sContext_p, R);
-    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
-
     if(rChar == 'd')
     {
-        if(R->xMax+40<= 100)
+        if(R->xMax+40 <= 120)
         {
             Graphics_drawRectangle(g_sContext_p, R);
             R->xMin = R->xMin + 40;
@@ -131,16 +165,52 @@ void movePlots(Graphics_Rectangle *R, uint8_t rChar, Graphics_Context *g_sContex
     }
     else if(rChar == 's')
     {
-
+        if(R->yMax+40 <= 100)
+        {
+            Graphics_drawRectangle(g_sContext_p, R);
+            R->yMin = R->yMin + 40;
+            R->yMax = R->yMax + 40;
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+            Graphics_drawRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        }
     }
     else if(rChar == 'a')
     {
-
+        if(R->xMin-40 >= 0)
+        {
+            Graphics_drawRectangle(g_sContext_p, R);
+            R->xMin = R->xMin - 40;
+            R->xMax = R->xMax - 40;
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+            Graphics_drawRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        }
     }
     else if(rChar == 'w')
     {
-
+        if(R->yMin-40 >= 0)
+        {
+            Graphics_drawRectangle(g_sContext_p, R);
+            R->yMin = R->yMin - 40;
+            R->yMax = R->yMax - 40;
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+            Graphics_drawRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        }
     }
+}
+
+void Plot_init(Graphics_Rectangle *R, Graphics_Context *g_sContext_p)
+{
+    R->xMin = 0;
+    R->xMax = 40;
+    R->yMin = 20;
+    R->yMax = 60;
+    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+    Graphics_drawRectangle(g_sContext_p, R);
+    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+
 }
 
 void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
@@ -158,14 +228,14 @@ void display(Graphics_Context *g_sContext_p, int8_t *timeString,
     Graphics_Rectangle R;
 
         R.xMin = 0;
-        R.xMax = 127;
+        R.xMax = 120;
         R.yMin = 20;
         R.yMax = 100;
 
     Graphics_drawRectangle(g_sContext_p, &R);
     Graphics_drawLineV(g_sContext_p, 40, 20, 100);
     Graphics_drawLineV(g_sContext_p, 80, 20, 100);
-    Graphics_drawLineH(g_sContext_p, 0, 127, 60);
+    Graphics_drawLineH(g_sContext_p, 0, 120, 60);
     Graphics_drawString(g_sContext_p, timeString, -1, 10, 5, true);
     Graphics_drawString(g_sContext_p, DifficultyString, -1, 110, 5, true);
     Graphics_drawString(g_sContext_p, MoneyString, -1, 10, 105, true);
