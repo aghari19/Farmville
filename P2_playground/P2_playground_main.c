@@ -5,6 +5,9 @@
 #include "graphics_HAL.h"
 #include "UART_HAL.h"
 #include "Farm.h"
+#include "ButtonLED_HAL.h"
+#include "Timer32_HAL.h"
+
 // include all other .h files
 
 #define LOAD_E 24000000
@@ -28,7 +31,7 @@ void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneySt
 void movePlots(Graphics_Rectangle *R, uint8_t rChar , Graphics_Context *g_sContext_p);
 void Plot_init(Graphics_Rectangle *R, Graphics_Context *g_sContext_p);
 
-void plots();
+void plots(Graphics_Rectangle *R, farm_t *farm, Graphics_Context *g_sContext_p);
 bool isEmpty(Graphics_Rectangle *R, farm_t *farm);
 
 int main(void)
@@ -47,7 +50,7 @@ int main(void)
     int8_t timeString[6] = "00:00";
     int8_t MoneyString[11] = "Money:  03";
     int8_t HealthString[11] = "Health: 00";
-    int8_t DifficultyString[2] = "E";
+    int8_t DifficultyString[1] = "E";
 
     display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
     Plot_init(&R, &g_sContext);
@@ -72,15 +75,27 @@ int main(void)
     uint8_t rChar, tChar;
     int i=0;
 
+    bool waiting = 1;
+
+    while (waiting)
+    {
+        if(UARTHasChar(EUSCI_A0_BASE))
+        {
+            waiting = 0;
+        }
+    }
+
     while (1)
     {
-        /*if (UARTHasChar(EUSCI_A0_BASE) && timer0Expired())
-            {
-                startTimerE();
-                increaseTime(&farm);
-                makeToString(farm, timeString);
-                display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
-            }*/
+        if(timer0Expired())
+        {
+            startOneShotTimer0(LOAD_E);
+            increaseTime(&farm);
+            makeToString(farm, timeString);
+            display(&g_sContext, timeString, MoneyString, HealthString,
+                    DifficultyString);
+        }
+
 
         if(UARTHasChar(EUSCI_A0_BASE))
         {
@@ -102,13 +117,21 @@ int main(void)
             case 'p':
                         if(isEmpty(&R, &farm))
                         {
-                            plots(&farm);
+                            plots(&R, &farm, &g_sContext);
                         }
                         break;
             case 'r':
                         break;
             case 'l':
                         ChangeDifficulty(&farm,&uartConfig);
+                        if(farm.Difficulty == 'M')
+                        {
+                            DifficultyString[0] = 'M';
+                        }
+                        else if(farm.Difficulty == 'H')
+                        {
+                            DifficultyString[0] = 'H';
+                        }
                         display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
                         break;
             }
@@ -120,34 +143,114 @@ bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
 {
     if((R->xMax == 40) && (R->yMax == 60))//The first Plot in the array it is the second plot
     {
-
+        if(farm->Plots[0].Age == 0)
+            return true;
+        else
+            return false;
     }
     else if((R->xMax == 80) && (R->yMax == 60))
     {
-
+        if (farm->Plots[1].Age == 0)
+            return true;
+        else
+            return false;
     }
     else if((R->xMax == 120) && (R->yMax == 60))
     {
+        if (farm->Plots[2].Age == 0)
+            return true;
+        else
+            return false;
 
     }
     else if ((R->xMax == 40) && (R->yMax == 100))
     {
+        if (farm->Plots[3].Age == 0)
+            return true;
+        else
+            return false;
 
     }
     else if ((R->xMax == 80) && (R->yMax == 100))
     {
+        if (farm->Plots[4].Age == 0)
+            return true;
+        else
+            return false;
 
     }
     else if ((R->xMax == 120) && (R->yMax == 100))
     {
+        if (farm->Plots[5].Age == 0)
+            return true;
+        else
+            return false;
 
     }
-    return true;
 }
 
-void plots()
+void plots(Graphics_Rectangle *R, farm_t *farm, Graphics_Context *g_sContext_p)
 {
+    if((R->xMax == 40) && (R->yMax == 60))//The first Plot in the array it is the second plot
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
 
+    }
+    else if ((R->xMax == 80) && (R->yMax == 60))
+    {
+        Graphics_fillCircle(g_sContext_p, 50, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 60, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 70, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 50, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 60, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 70, 40, 1);
+
+    }
+    else if ((R->xMax == 120) && (R->yMax == 60))
+    {
+        Graphics_fillCircle(g_sContext_p, 90, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 100, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 110, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 90, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 100, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 110, 40, 1);
+
+    }
+    else if ((R->xMax == 40) && (R->yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+
+    }
+    else if ((R->xMax == 80) && (R->yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+
+    }
+    else if ((R->xMax == 120) && (R->yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+
+    }
 }
 void movePlots(Graphics_Rectangle *R, uint8_t rChar, Graphics_Context *g_sContext_p)
 {
@@ -218,7 +321,11 @@ void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
     if(farm->Difficulty == 'E')
     {
         farm->Difficulty = 'M';
-        UARTSetBaud(EUSCI_A0_BASE,&uartConfig_p,baud19200);
+        //UARTSetBaud(EUSCI_A0_BASE, uartConfig_p,baud19200);
+    }
+    else if(farm->Difficulty == 'M')
+    {
+        farm->Difficulty = 'H';
     }
 }
 
@@ -301,6 +408,14 @@ void initialize()
 {
     // stop the watchdog timer
     WDT_A_hold(WDT_A_BASE);
+
+    initialize_BoosterpackLED_red();
+        initialize_BoosterpackLED_green();
+        initialize_BoosterpackLED_blue();
+
+        turnOff_BoosterpackLED_red();
+        turnOff_BoosterpackLED_green();
+        turnOff_BoosterpackLED_blue();
 
     InitTimer();
 
