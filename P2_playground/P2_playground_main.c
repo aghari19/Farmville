@@ -177,15 +177,17 @@ bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
             return true;
         else
             return false;
-
     }
     else if ((R->xMax == 120) && (R->yMax == 100))
     {
         if (farm->Plots[5].Age == 0)
+        {
             return true;
+        }
         else
+        {
             return false;
-
+        }
     }
 }
 
@@ -223,32 +225,33 @@ void plots(Graphics_Rectangle *R, farm_t *farm, Graphics_Context *g_sContext_p)
     }
     else if ((R->xMax == 40) && (R->yMax == 100))
     {
-        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 10, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 20, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 30, 80, 1);
 
     }
     else if ((R->xMax == 80) && (R->yMax == 100))
     {
-        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+        Graphics_fillCircle(g_sContext_p, 50, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 60, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 70, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 50, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 60, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 70, 80, 1);
 
     }
     else if ((R->xMax == 120) && (R->yMax == 100))
     {
-        Graphics_fillCircle(g_sContext_p, 10, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 30, 1);
-        Graphics_fillCircle(g_sContext_p, 10, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 20, 40, 1);
-        Graphics_fillCircle(g_sContext_p, 30, 40, 1);
+        turnOn_BoosterpackLED_green();
+        Graphics_fillCircle(g_sContext_p, 90, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 100, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 110, 70, 1);
+        Graphics_fillCircle(g_sContext_p, 90, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 100, 80, 1);
+        Graphics_fillCircle(g_sContext_p, 110, 80, 1);
 
     }
 }
@@ -409,13 +412,19 @@ void initialize()
     // stop the watchdog timer
     WDT_A_hold(WDT_A_BASE);
 
+    initialize_LaunchpadLED2_red();
+    initialize_LaunchpadLED2_green();
+    initialize_LaunchpadLED2_blue();
     initialize_BoosterpackLED_red();
-        initialize_BoosterpackLED_green();
-        initialize_BoosterpackLED_blue();
+    initialize_BoosterpackLED_green();
+    initialize_BoosterpackLED_blue();
 
-        turnOff_BoosterpackLED_red();
-        turnOff_BoosterpackLED_green();
-        turnOff_BoosterpackLED_blue();
+    turnOff_LaunchpadLED2_red();
+    turnOff_LaunchpadLED2_green();
+    turnOff_LaunchpadLED2_blue();
+    turnOff_BoosterpackLED_red();
+    turnOff_BoosterpackLED_green();
+    turnOff_BoosterpackLED_blue();
 
     InitTimer();
 

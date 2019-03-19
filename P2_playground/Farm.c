@@ -15,7 +15,7 @@ void Farm_init(farm_t *farm)
     farm->CropHealth = 0;
     farm->Difficulty = 'E';
 
-    for(i=0; i<5; i++)
+    for(i=0; i<=5; i++)
     {
         farm->Plots[i].Age = 0;
         farm->Plots[i].Health = 0;
