@@ -22,8 +22,10 @@ void startTimerH();
 void makeToString(farm_t farm, int8_t *string);
 void increaseTime(farm_t *farm);
 
-void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
+void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p);
 
+void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
+void movePlots(Graphics_Rectangle *R, uint8_t rChar , Graphics_Context *g_sContext_p);
 
 int main(void)
 {
@@ -33,6 +35,7 @@ int main(void)
     InitGraphics(&g_sContext);
 
     farm_t farm;
+    Graphics_Rectangle R;
     Farm_init(&farm);
 
 
@@ -64,13 +67,88 @@ int main(void)
 
     while (1)
     {
-        if (UARTHasChar(EUSCI_A0_BASE) && timer0Expired())
+        /*if (UARTHasChar(EUSCI_A0_BASE) && timer0Expired())
+            {
+                startTimerE();
+                increaseTime(&farm);
+                makeToString(farm, timeString);
+                display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
+            }*/
+
+        if(UARTHasChar(EUSCI_A0_BASE))
         {
-            startTimerE();
-            increaseTime(&farm);
-            makeToString(farm, timeString);
-            display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
+            rChar = UARTGetChar(EUSCI_A0_BASE);
+            switch(rChar)
+            {
+            case 'w':
+                        movePlots(&R, rChar, &g_sContext);
+                        break;
+            case 'a':
+                        movePlots(&R, rChar, &g_sContext);
+                        break;
+            case 's':
+                        movePlots(&R, rChar, &g_sContext);
+                        break;
+            case 'd':
+                        movePlots(&R, rChar, &g_sContext);
+                        break;
+            case 'p':
+
+                        break;
+            case 'r':
+                        break;
+            case 'l':
+                        ChangeDifficulty(&farm,&uartConfig);
+                        display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
+                        break;
+            }
         }
+    }
+}
+
+void movePlots(Graphics_Rectangle *R, uint8_t rChar, Graphics_Context *g_sContext_p)
+{
+    R->xMin = 0;
+    R->xMax = 40;
+    R->yMin = 20;
+    R->yMax = 60;
+
+    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+    Graphics_drawRectangle(g_sContext_p, R);
+    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+
+    if(rChar == 'd')
+    {
+        if(R->xMax+40<= 100)
+        {
+            Graphics_drawRectangle(g_sContext_p, R);
+            R->xMin = R->xMin + 40;
+            R->xMax = R->xMax + 40;
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_GREEN);
+            Graphics_drawRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        }
+    }
+    else if(rChar == 's')
+    {
+
+    }
+    else if(rChar == 'a')
+    {
+
+    }
+    else if(rChar == 'w')
+    {
+
+    }
+}
+
+void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
+{
+    if(farm->Difficulty == 'E')
+    {
+        farm->Difficulty = 'M';
+        UARTSetBaud(EUSCI_A0_BASE,&uartConfig_p,baud19200);
     }
 }
 
@@ -86,7 +164,7 @@ void display(Graphics_Context *g_sContext_p, int8_t *timeString,
 
     Graphics_drawRectangle(g_sContext_p, &R);
     Graphics_drawLineV(g_sContext_p, 40, 20, 100);
-    Graphics_drawLineV(g_sContext_p, 82, 20, 100);
+    Graphics_drawLineV(g_sContext_p, 80, 20, 100);
     Graphics_drawLineH(g_sContext_p, 0, 127, 60);
     Graphics_drawString(g_sContext_p, timeString, -1, 10, 5, true);
     Graphics_drawString(g_sContext_p, DifficultyString, -1, 110, 5, true);
