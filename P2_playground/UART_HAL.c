@@ -67,3 +67,16 @@ void UARTSetBaud(uint32_t moduleInstance, eUSCI_UART_Config *uartConfig_p, UARTB
         UpdateUART(moduleInstance, uartConfig_p);
     }
 }
+
+void InitializeUART(eUSCI_UART_Config *uartConfig)
+{
+    uartConfig->selectClockSource = EUSCI_A_UART_CLOCKSOURCE_SMCLK;
+    uartConfig->clockPrescalar = 312;
+    uartConfig->firstModReg = 8;
+    uartConfig->secondModReg = 0x00;
+    uartConfig->parity =  EUSCI_A_UART_NO_PARITY;
+    uartConfig->msborLsbFirst =  EUSCI_A_UART_LSB_FIRST;
+    uartConfig->numberofStopBits = EUSCI_A_UART_ONE_STOP_BIT;
+    uartConfig->uartMode = EUSCI_A_UART_MODE;
+    uartConfig->overSampling = EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION;
+}

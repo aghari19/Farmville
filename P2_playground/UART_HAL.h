@@ -21,4 +21,4 @@ void UARTPutChar(uint32_t moduleInstance, uint8_t tChar);
 
 void UARTSetBaud(uint32_t moduleInstance, eUSCI_UART_Config *uartConfig_p, UARTBaudRate_t newBaud);
 
-
+void InitializeUART(eUSCI_UART_Config *uartConfig);

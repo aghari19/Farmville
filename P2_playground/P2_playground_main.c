@@ -1,44 +1,45 @@
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/grlib/grlib.h>
+
 #include "graphics_HAL.h"
 #include "UART_HAL.h"
 #include "ButtonLED_HAL.h"
 #include "Timer32_HAL.h"
 #include "Farm.h"
+
 #define LOAD_E 24000000
 #define LOAD_M 16000000
 #define LOAD_H 8000000
+
 extern Graphics_Image Jon_Bunting8BPP_UNCOMP;
+
 void initialize();
 void Commands(uint8_t rChar, Graphics_Rectangle *R, Graphics_Context *g_sContext, farm_t *farm,
               eUSCI_UART_Config *uartConfig, int8_t *timeString,int8_t *MoneyString,int8_t *HealthString,int8_t *DifficultyString);
+
 int main(void)
 {
     Graphics_Context g_sContext;
+    eUSCI_UART_Config uartConfig;
+
     initialize();
+    InitializeUART(&uartConfig);
     InitGraphics(&g_sContext);
+    InitUART(EUSCI_A0_BASE, &uartConfig, GPIO_PORT_P1, GPIO_PIN2 | GPIO_PIN3);
+
     farm_t farm;
     Graphics_Rectangle R;
+
     Farm_init(&farm);
+
     int8_t timeString[6] = "00:00";
     int8_t MoneyString[11] = "Money:  03";
     int8_t HealthString[11] = "Health: 00";
     int8_t DifficultyString[2] = "E ";
+
     display(&g_sContext, timeString, MoneyString, HealthString, DifficultyString);
     Plot_init(&R, &g_sContext);
-    eUSCI_UART_Config uartConfig =
-       {
-            EUSCI_A_UART_CLOCKSOURCE_SMCLK,               // SMCLK Clock Source = 48MHz
-            312,                                           // UCBR   = 19
-            8,                                            // UCBRF  = 8
-            0x00,                                         // UCBRS  = 0xAA
-            EUSCI_A_UART_NO_PARITY,                       // No Parity
-            EUSCI_A_UART_LSB_FIRST,                       // LSB First
-            EUSCI_A_UART_ONE_STOP_BIT,                    // One stop bit
-            EUSCI_A_UART_MODE,                            // UART mode
-            EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION // Oversampling
-       };
-    InitUART(EUSCI_A0_BASE, &uartConfig, GPIO_PORT_P1, GPIO_PIN2 | GPIO_PIN3);
+
     uint8_t rChar;
     bool monthChange;
     bool waiting = 1;
@@ -146,7 +147,7 @@ int main(void)
             monthChange = false;
         }
         pressed =  false;
-        if((plotted == 1) && (Health == 0))
+        if((plotted == 1) && (Health == 0) && (farm.Money == 0))
         {
             break;
 
