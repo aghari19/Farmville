@@ -656,7 +656,7 @@ void growing(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
 
 
             Graphics_fillCircle(g_sContext_p, 110, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 70, 36, 44);
+            Graphics_drawLineV(g_sContext_p, 110, 36, 44);
 
 
         }
@@ -868,4 +868,146 @@ void display(Graphics_Context *g_sContext_p, int8_t *timeString,
     Graphics_drawString(g_sContext_p, DifficultyString, -1, 110, 5, true);
     Graphics_drawString(g_sContext_p, MoneyString, -1, 10, 105, true);
     Graphics_drawString(g_sContext_p, HealthString, -1, 10, 115, true);
+}
+
+void Harvest(farm_t *farm,Graphics_Rectangle *R,Graphics_Context *g_sContext_p )
+{
+    if((R->xMax == 40) && (R->yMax == 60))
+    {
+        if((farm->Plots[0].Age > 6) && (farm->Plots[0].Age < 9) &&
+                           (farm->Plots[0].Health > 2) && (farm->Plots[0].Hydration > 2))
+        {
+            farm->Plots[0].Age = 0;
+            farm->Plots[0].Health = 0;
+            farm->Plots[0].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p,R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money/10)%10) + 48;
+            Money[1] = (farm->Money%10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+    else if((R->xMax == 80) && (R->yMax == 60))
+    {
+        if ((farm->Plots[1].Age > 6) && (farm->Plots[1].Age < 9)
+                && (farm->Plots[1].Health > 2)
+                && (farm->Plots[1].Hydration > 2))
+        {
+            farm->Plots[1].Age = 0;
+            farm->Plots[1].Health = 0;
+            farm->Plots[1].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money / 10) % 10) + 48;
+            Money[1] = (farm->Money % 10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+    else if((R->xMax == 120) && (R->yMax == 60))
+    {
+        if ((farm->Plots[2].Age > 6) && (farm->Plots[2].Age < 9)
+                && (farm->Plots[2].Health > 2)
+                && (farm->Plots[2].Hydration > 2))
+        {
+            farm->Plots[2].Age = 0;
+            farm->Plots[2].Health = 0;
+            farm->Plots[2].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money / 10) % 10) + 48;
+            Money[1] = (farm->Money % 10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+    else if((R->xMax == 40) && (R->yMax == 100))
+    {
+        if ((farm->Plots[3].Age > 6) && (farm->Plots[3].Age < 9)
+                && (farm->Plots[3].Health > 2)
+                && (farm->Plots[3].Hydration > 2))
+        {
+            farm->Plots[3].Age = 0;
+            farm->Plots[3].Health = 0;
+            farm->Plots[3].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money / 10) % 10) + 48;
+            Money[1] = (farm->Money % 10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+    else if((R->xMax == 80) && (R->yMax == 100))
+    {
+        if ((farm->Plots[4].Age > 6) && (farm->Plots[4].Age < 9)
+                && (farm->Plots[4].Health > 2)
+                && (farm->Plots[4].Hydration > 2))
+        {
+            farm->Plots[4].Age = 0;
+            farm->Plots[4].Health = 0;
+            farm->Plots[4].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money / 10) % 10) + 48;
+            Money[1] = (farm->Money % 10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+    else if((R->xMax == 120) && (R->yMax == 100))
+    {
+        if ((farm->Plots[5].Age > 6) && (farm->Plots[5].Age < 9)
+                && (farm->Plots[5].Health > 2)
+                && (farm->Plots[5].Hydration > 2))
+        {
+            farm->Plots[5].Age = 0;
+            farm->Plots[5].Health = 0;
+            farm->Plots[5].Hydration = 0;
+
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+            Graphics_fillRectangle(g_sContext_p, R);
+            Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+            farm->Money = farm->Money + 2;
+
+            int8_t Money[3];
+            Money[0] = ((farm->Money / 10) % 10) + 48;
+            Money[1] = (farm->Money % 10) + 48;
+
+            Graphics_drawString(g_sContext_p, Money, -1, 70, 105, true);
+        }
+    }
+
+}
+
+void DrawTime(Graphics_Context *g_sContext_p, int8_t *timeString)
+{
+    Graphics_drawString(g_sContext_p, timeString, -1, 10, 5, true);
+
 }

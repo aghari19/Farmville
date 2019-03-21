@@ -49,6 +49,8 @@ int main(void)
             waiting = 0;
         }
     }
+    display(&g_sContext, timeString, MoneyString, HealthString,
+                        DifficultyString);
     while (1)
     {
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_GREEN);
@@ -59,8 +61,7 @@ int main(void)
             startOneShotTimer0(LOAD_E);
             monthChange = increaseTime(&farm);
             makeToString(farm, timeString);
-            display(&g_sContext, timeString, MoneyString, HealthString,
-                    DifficultyString);
+            DrawTime(&g_sContext, timeString);
         }
         else if(UARTHasChar(EUSCI_A0_BASE))
         {
@@ -101,6 +102,12 @@ int main(void)
                             changeHealth(&farm,R,rChar,&g_sContext);
                         }
                         break;
+            case 'h':
+                        if((pressed == true) | !(isEmpty(&R, &farm)))
+                        {
+                            Harvest(&farm,&R,&g_sContext);
+                        }
+                        break;
             case 'l':
                         ChangeDifficulty(&farm, &uartConfig);
                         if(farm.Difficulty == 'M')
@@ -128,5 +135,12 @@ int main(void)
 void initialize()
 {
     WDT_A_hold(WDT_A_BASE);
+    initialize_LaunchpadLED1();
+    initialize_LaunchpadLED2_red();
+    initialize_LaunchpadLED2_green();
+    initialize_LaunchpadLED2_blue();
+    initialize_BoosterpackLED_red();
+    initialize_BoosterpackLED_green();
+    initialize_BoosterpackLED_blue();
     InitTimer();
 }
