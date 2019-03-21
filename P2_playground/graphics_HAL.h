@@ -13,6 +13,7 @@ void plots(Graphics_Rectangle R, farm_t *farm, Graphics_Context *g_sContext_p);
 
 void growing(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R );
 void Ready(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R );
+void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R );
 
 void display(Graphics_Context *g_sContext_p, int8_t *timeString, int8_t *MoneyString, int8_t *HealthString, int8_t *DifficultyString);
 

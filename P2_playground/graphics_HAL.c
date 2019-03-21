@@ -28,7 +28,7 @@ void InitGraphics(Graphics_Context *g_sContext_p)
 
 void movePlots(Graphics_Rectangle *R, uint8_t rChar, Graphics_Context *g_sContext_p)
 {
-    if(rChar == 'd')
+   if(rChar == 'd')
     {
         if(R->xMax+40 <= 120)
         {
@@ -129,7 +129,7 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
     else if ((R.xMax == 80) && (R.yMax == 60))
     {
-        farm->Plots[1].Age = 6;
+        farm->Plots[1].Age = 0;
         farm->Plots[1].Health = 3;
         farm->Plots[1].Hydration = 2;
 
@@ -158,7 +158,7 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
     else if ((R.xMax == 120) && (R.yMax == 60))
     {
-        farm->Plots[2].Age = 6;
+        farm->Plots[2].Age = 0;
         farm->Plots[2].Health = 3;
         farm->Plots[2].Hydration = 2;
 
@@ -188,7 +188,7 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
     else if ((R.xMax == 40) && (R.yMax == 100))
     {
-        farm->Plots[3].Age = 6;
+        farm->Plots[3].Age = 0;
         farm->Plots[3].Health = 3;
         farm->Plots[3].Hydration = 2;
 
@@ -217,7 +217,7 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
     else if ((R.xMax == 80) && (R.yMax == 100))
     {
-        farm->Plots[4].Age = 6;
+        farm->Plots[4].Age = 0;
         farm->Plots[4].Health = 3;
         farm->Plots[4].Hydration = 2;
 
@@ -248,7 +248,7 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
     else if ((R.xMax == 120) && (R.yMax == 100))
     {
-        farm->Plots[5].Age = 6;
+        farm->Plots[5].Age = 0;
         farm->Plots[5].Health = 3;
         farm->Plots[5].Hydration = 2;
 
@@ -346,6 +346,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
             {
                 Ready(farm,g_sContext_p, R);
             }
+            if((farm->Plots[0].Age > 9)|(farm->Plots[0].Health == 0)|(farm->Plots[0].Hydration == 0))
+            {
+                Dead(farm,g_sContext_p, R);
+            }
        }
        R.xMax = 80;
        R.yMax = 60;
@@ -360,6 +364,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
                    (farm->Plots[1].Health > 2) && (farm->Plots[1].Hydration > 2))
            {
                Ready(farm,g_sContext_p, R);
+           }
+           if((farm->Plots[1].Age > 9)|(farm->Plots[1].Health == 0)|(farm->Plots[1].Hydration == 0))
+           {
+               Dead(farm,g_sContext_p, R);
            }
        }
        R.xMax = 120;
@@ -376,6 +384,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
            {
                Ready(farm,g_sContext_p, R);
            }
+           if((farm->Plots[2].Age > 9)|(farm->Plots[2].Health == 0)|(farm->Plots[2].Hydration == 0))
+           {
+               Dead(farm,g_sContext_p, R);
+           }
        }
        R.xMax = 40;
        R.yMax = 100;
@@ -390,6 +402,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
                    (farm->Plots[3].Health > 2) && (farm->Plots[3].Hydration > 2))
            {
                Ready(farm,g_sContext_p, R);
+           }
+           if((farm->Plots[3].Age > 9)|(farm->Plots[3].Health == 0)|(farm->Plots[3].Hydration == 0))
+           {
+               Dead(farm,g_sContext_p, R);
            }
        }
        R.xMax = 80;
@@ -406,6 +422,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
            {
                Ready(farm,g_sContext_p, R);
            }
+           if((farm->Plots[4].Age > 9)|(farm->Plots[4].Health == 0)|(farm->Plots[4].Hydration == 0))
+           {
+               Dead(farm,g_sContext_p, R);
+           }
        }
        R.xMax = 120;
        R.yMax = 100;
@@ -420,6 +440,10 @@ void checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
                    (farm->Plots[5].Health > 2) && (farm->Plots[5].Hydration > 2))
            {
                Ready(farm,g_sContext_p, R);
+           }
+           if((farm->Plots[5].Age > 9)|(farm->Plots[5].Health == 0)|(farm->Plots[5].Hydration == 0))
+           {
+               Dead(farm,g_sContext_p, R);
            }
        }
 }
@@ -589,142 +613,231 @@ void Ready(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
 
     }
 }
+void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
+{
+    if ((R.xMax == 40) && (R.yMax == 60)) //The first Plot in the array it is the second plot
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 10, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 20, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 30, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 10, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 20, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 30, 36, 44);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+
+    }
+    else if ((R.xMax == 80) && (R.yMax == 60))
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 50, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 60, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 70, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 50, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 60, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 70, 36, 44);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+    }
+    else if ((R.xMax == 120) && (R.yMax == 60))
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 90, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 100, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 110, 26, 34);
+        Graphics_drawLineV(g_sContext_p, 90, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 100, 36, 44);
+        Graphics_drawLineV(g_sContext_p, 110, 36, 44);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+    }
+    else if ((R.xMax == 40) && (R.yMax == 100))
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 10, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 20, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 30, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 10, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 20, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 30, 76, 84);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+    }
+    else if ((R.xMax == 80) && (R.yMax == 100))
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 50, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 60, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 70, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 50, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 60, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 70, 76, 84);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+    }
+    else if ((R.xMax == 120) && (R.yMax == 100))
+    {
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&R);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
+        Graphics_drawLineV(g_sContext_p, 90, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 100, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 110, 66, 74);
+        Graphics_drawLineV(g_sContext_p, 90, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 100, 76, 84);
+        Graphics_drawLineV(g_sContext_p, 110, 76, 84);
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+    }
+}
+
 void growing(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
 {
-    if((R.xMax == 40) && (R.yMax == 60))//The first Plot in the array it is the second plot
-        {
-            Graphics_fillCircle(g_sContext_p, 10, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 10, 26, 34);
+    if ((R.xMax == 40) && (R.yMax == 60)) //The first Plot in the array it is the second plot
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 10, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 20, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 20, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 20, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 20, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 30, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 30, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 30, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 30, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 10, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 10, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 10, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 10, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 20, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 20, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 20, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 20, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 30, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 30, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 30, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 30, 36, 44);
 
-        }
-        else if ((R.xMax == 80) && (R.yMax == 60))
-        {
-            Graphics_fillCircle(g_sContext_p, 50, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 50, 26, 34);
+    }
+    else if ((R.xMax == 80) && (R.yMax == 60))
+    {
+        Graphics_fillCircle(g_sContext_p, 50, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 50, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 60, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 60, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 60, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 60, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 70, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 70, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 70, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 70, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 50, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 50, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 50, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 50, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 60, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 60, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 60, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 60, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 70, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 70, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 70, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 70, 36, 44);
 
-        }
-        else if ((R.xMax == 120) && (R.yMax == 60))
-        {
-            Graphics_fillCircle(g_sContext_p, 90, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 90, 26, 34);
+    }
+    else if ((R.xMax == 120) && (R.yMax == 60))
+    {
+        Graphics_fillCircle(g_sContext_p, 90, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 90, 26, 34);
 
+        Graphics_fillCircle(g_sContext_p, 100, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 100, 26, 34);
 
-            Graphics_fillCircle(g_sContext_p, 100, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 100, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 110, 30, 2);
+        Graphics_drawLineV(g_sContext_p, 110, 26, 34);
 
+        Graphics_fillCircle(g_sContext_p, 90, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 90, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 110, 30, 2);
-            Graphics_drawLineV(g_sContext_p, 110, 26, 34);
+        Graphics_fillCircle(g_sContext_p, 100, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 100, 36, 44);
 
+        Graphics_fillCircle(g_sContext_p, 110, 40, 2);
+        Graphics_drawLineV(g_sContext_p, 110, 36, 44);
 
-            Graphics_fillCircle(g_sContext_p, 90, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 90, 36, 44);
+    }
+    else if ((R.xMax == 40) && (R.yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 10, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 10, 66, 74);
 
+        Graphics_fillCircle(g_sContext_p, 20, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 20, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 100, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 100, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 30, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 30, 66, 74);
 
+        Graphics_fillCircle(g_sContext_p, 10, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 10, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 110, 40, 2);
-            Graphics_drawLineV(g_sContext_p, 110, 36, 44);
+        Graphics_fillCircle(g_sContext_p, 20, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 20, 76, 84);
 
+        Graphics_fillCircle(g_sContext_p, 30, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 30, 76, 84);
 
-        }
-        else if ((R.xMax == 40) && (R.yMax == 100))
-        {
-            Graphics_fillCircle(g_sContext_p, 10, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 10, 66, 74);
+    }
+    else if ((R.xMax == 80) && (R.yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 50, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 50, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 20, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 20, 66, 74);
+        Graphics_fillCircle(g_sContext_p, 60, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 60, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 30, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 30, 66, 74);
+        Graphics_fillCircle(g_sContext_p, 70, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 70, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 10, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 10, 76, 84);
+        Graphics_fillCircle(g_sContext_p, 50, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 50, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 20, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 20, 76, 84);
+        Graphics_fillCircle(g_sContext_p, 60, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 60, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 30, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 30, 76, 84);
+        Graphics_fillCircle(g_sContext_p, 70, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 70, 76, 84);
 
+    }
+    else if ((R.xMax == 120) && (R.yMax == 100))
+    {
+        Graphics_fillCircle(g_sContext_p, 90, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 90, 66, 74);
 
-        }
-        else if ((R.xMax == 80) && (R.yMax == 100))
-        {
-            Graphics_fillCircle(g_sContext_p, 50, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 50, 66, 74);
+        Graphics_fillCircle(g_sContext_p, 100, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 100, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 60, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 60, 66, 74);
+        Graphics_fillCircle(g_sContext_p, 110, 70, 2);
+        Graphics_drawLineV(g_sContext_p, 110, 66, 74);
 
-            Graphics_fillCircle(g_sContext_p, 70, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 70, 66, 74);
+        Graphics_fillCircle(g_sContext_p, 90, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 90, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 50, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 50, 76, 84);
+        Graphics_fillCircle(g_sContext_p, 100, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 100, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 60, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 60, 76, 84);
+        Graphics_fillCircle(g_sContext_p, 110, 80, 2);
+        Graphics_drawLineV(g_sContext_p, 110, 76, 84);
 
-            Graphics_fillCircle(g_sContext_p, 70, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 70, 76, 84);
-
-        }
-        else if ((R.xMax == 120) && (R.yMax == 100))
-        {
-            Graphics_fillCircle(g_sContext_p, 90, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 90, 66, 74);
-
-            Graphics_fillCircle(g_sContext_p, 100, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 100, 66, 74);
-
-            Graphics_fillCircle(g_sContext_p, 110, 70, 2);
-            Graphics_drawLineV(g_sContext_p, 110, 66, 74);
-
-            Graphics_fillCircle(g_sContext_p, 90, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 90, 76, 84);
-
-            Graphics_fillCircle(g_sContext_p, 100, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 100, 76, 84);
-
-            Graphics_fillCircle(g_sContext_p, 110, 80, 2);
-            Graphics_drawLineV(g_sContext_p, 110, 76, 84);
-
-        }
+    }
 }
+
 
 void changeHydration(farm_t *farm,Graphics_Rectangle R,uint8_t entered,Graphics_Context *g_sContext_p )
 {
@@ -1009,5 +1122,4 @@ void Harvest(farm_t *farm,Graphics_Rectangle *R,Graphics_Context *g_sContext_p )
 void DrawTime(Graphics_Context *g_sContext_p, int8_t *timeString)
 {
     Graphics_drawString(g_sContext_p, timeString, -1, 10, 5, true);
-
 }

@@ -42,6 +42,7 @@ int main(void)
     bool monthChange;
     bool waiting = 1;
     bool pressed = false;
+    int health
     while (waiting)
     {
         if(UARTHasChar(EUSCI_A0_BASE))
@@ -126,7 +127,6 @@ int main(void)
         if((monthChange == true))
         {
             update(&farm, monthChange ,R,&g_sContext );
-
             monthChange = false;
         }
         pressed =  false;
@@ -135,12 +135,5 @@ int main(void)
 void initialize()
 {
     WDT_A_hold(WDT_A_BASE);
-    initialize_LaunchpadLED1();
-    initialize_LaunchpadLED2_red();
-    initialize_LaunchpadLED2_green();
-    initialize_LaunchpadLED2_blue();
-    initialize_BoosterpackLED_red();
-    initialize_BoosterpackLED_green();
-    initialize_BoosterpackLED_blue();
     InitTimer();
 }
