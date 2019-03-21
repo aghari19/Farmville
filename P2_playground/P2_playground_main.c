@@ -42,7 +42,7 @@ int main(void)
     bool monthChange;
     bool waiting = 1;
     bool pressed = false;
-    int health
+    int Health;
     while (waiting)
     {
         if(UARTHasChar(EUSCI_A0_BASE))
@@ -88,6 +88,9 @@ int main(void)
                             MoneyString[9] = farm.Money+48;
                             display(&g_sContext, timeString, MoneyString, HealthString,
                                      DifficultyString);
+                            Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
+                                    farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                            DrawHealth(&g_sContext, HealthString, Health);
                             pressed = true;
                         }
                         break;
@@ -101,6 +104,9 @@ int main(void)
                         if((pressed == true) | !(isEmpty(&R, &farm)))
                         {
                             changeHealth(&farm,R,rChar,&g_sContext);
+                            Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
+                                       farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                            DrawHealth(&g_sContext, HealthString, Health);
                         }
                         break;
             case 'h':
@@ -126,7 +132,10 @@ int main(void)
         }
         if((monthChange == true))
         {
-            update(&farm, monthChange ,R,&g_sContext );
+            int no_live_plots = update(&farm, monthChange ,R,&g_sContext );
+            Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
+                    farm.Plots[4].Health+farm.Plots[5].Health)/no_live_plots;
+            DrawHealth(&g_sContext, HealthString, Health);
             monthChange = false;
         }
         pressed =  false;
