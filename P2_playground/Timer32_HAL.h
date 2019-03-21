@@ -15,10 +15,6 @@ void startOneShotTimer1(unsigned int LoadVal);
 void InitTimer();
 bool timer0Expired();
 
-void startTimerE();
-void startTimerM();
-void startTimerH();
-
 void makeToString(farm_t farm, int8_t *string);
 bool increaseTime(farm_t *farm);
 

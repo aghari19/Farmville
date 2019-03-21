@@ -9,6 +9,7 @@
 #define PLOTSTATUS_UPDATE_HAL_H_
 
 #include "Farm.h"
+#include "UART_HAL.h"
 
 
 void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p );

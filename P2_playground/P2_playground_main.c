@@ -8,6 +8,7 @@
 #define LOAD_E 24000000
 #define LOAD_M 16000000
 #define LOAD_H 8000000
+extern Graphics_Image Jon_Bunting8BPP_UNCOMP;
 void initialize();
 void Commands(uint8_t rChar, Graphics_Rectangle *R, Graphics_Context *g_sContext, farm_t *farm,
               eUSCI_UART_Config *uartConfig, int8_t *timeString,int8_t *MoneyString,int8_t *HealthString,int8_t *DifficultyString);
@@ -42,11 +43,14 @@ int main(void)
     bool monthChange;
     bool waiting = 1;
     bool pressed = false;
+    int LoadValue = LOAD_E;
     int Health;
+    int plotted=0;
     while (waiting)
     {
         if(UARTHasChar(EUSCI_A0_BASE))
         {
+            int8_t entered = UARTGetChar(EUSCI_A0_BASE);
             waiting = 0;
         }
     }
@@ -59,7 +63,7 @@ int main(void)
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_WHITE);
         if(timer0Expired())
         {
-            startOneShotTimer0(LOAD_E);
+            startOneShotTimer0(LoadValue);
             monthChange = increaseTime(&farm);
             makeToString(farm, timeString);
             DrawTime(&g_sContext, timeString);
@@ -84,6 +88,7 @@ int main(void)
             case 'p':
                         if (isEmpty(&R, &farm) && (farm.Money>0))
                         {
+                            plotted = 1;
                             plots(R,&farm,&g_sContext);
                             MoneyString[9] = farm.Money+48;
                             display(&g_sContext, timeString, MoneyString, HealthString,
@@ -119,10 +124,12 @@ int main(void)
                         ChangeDifficulty(&farm, &uartConfig);
                         if(farm.Difficulty == 'M')
                         {
+                            LoadValue = LOAD_M;
                             DifficultyString[0] = 'M';
                         }
                         else if (farm.Difficulty == 'H')
                         {
+                            LoadValue = LOAD_H;
                             DifficultyString[0] = 'H';
                         }
                         display(&g_sContext, timeString, MoneyString, HealthString,
@@ -139,7 +146,16 @@ int main(void)
             monthChange = false;
         }
         pressed =  false;
+        if((plotted == 1) && (Health == 0))
+        {
+            break;
+
+        }
     }
+    Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_RED);
+    Graphics_drawImage(&g_sContext, &Jon_Bunting8BPP_UNCOMP, 0, 0);
+    int8_t Over[12] = "!GAME OVER!";
+    Graphics_drawString(&g_sContext, Over, -1, 25, 100, false);
 }
 void initialize()
 {

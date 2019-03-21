@@ -605,11 +605,12 @@ void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
     if(farm->Difficulty == 'E')
     {
         farm->Difficulty = 'M';
-        //UARTSetBaud(EUSCI_A0_BASE, uartConfig_p,baud19200);
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud19200);
     }
     else if(farm->Difficulty == 'M')
     {
         farm->Difficulty = 'H';
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud57600);
     }
 }
 

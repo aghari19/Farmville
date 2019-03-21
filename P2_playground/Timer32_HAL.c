@@ -34,24 +34,6 @@ void InitTimer()
     Timer32_setCount(TIMER32_1_BASE, 1);
 }
 
-void startTimerE()
-{
-    Timer32_setCount(TIMER32_0_BASE, LOAD_E);
-    Timer32_startTimer(TIMER32_0_BASE, true);
-}
-
-void startTimerM()
-{
-    Timer32_setCount(TIMER32_0_BASE, LOAD_M);
-    Timer32_startTimer(TIMER32_0_BASE, true);
-}
-
-void startTimerH()
-{
-    Timer32_setCount(TIMER32_0_BASE, LOAD_H);
-    Timer32_startTimer(TIMER32_0_BASE, true);
-}
-
 bool timer0Expired()
 {
     return (Timer32_getValue(TIMER32_0_BASE) == 0);
