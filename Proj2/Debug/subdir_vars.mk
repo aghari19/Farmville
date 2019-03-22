@@ -11,6 +11,8 @@ CMD_SRCS += \
 C_SRCS += \
 ../ButtonLED_HAL.c \
 ../Farm.c \
+../Image.c \
+../PlotStatus_Update_HAL.c \
 ../Proj2_main.c \
 ../Timer32_HAL.c \
 ../UART_HAL.c \
@@ -20,6 +22,8 @@ C_SRCS += \
 C_DEPS += \
 ./ButtonLED_HAL.d \
 ./Farm.d \
+./Image.d \
+./PlotStatus_Update_HAL.d \
 ./Proj2_main.d \
 ./Timer32_HAL.d \
 ./UART_HAL.d \
@@ -29,6 +33,8 @@ C_DEPS += \
 OBJS += \
 ./ButtonLED_HAL.obj \
 ./Farm.obj \
+./Image.obj \
+./PlotStatus_Update_HAL.obj \
 ./Proj2_main.obj \
 ./Timer32_HAL.obj \
 ./UART_HAL.obj \
@@ -38,6 +44,8 @@ OBJS += \
 OBJS__QUOTED += \
 "ButtonLED_HAL.obj" \
 "Farm.obj" \
+"Image.obj" \
+"PlotStatus_Update_HAL.obj" \
 "Proj2_main.obj" \
 "Timer32_HAL.obj" \
 "UART_HAL.obj" \
@@ -47,6 +55,8 @@ OBJS__QUOTED += \
 C_DEPS__QUOTED += \
 "ButtonLED_HAL.d" \
 "Farm.d" \
+"Image.d" \
+"PlotStatus_Update_HAL.d" \
 "Proj2_main.d" \
 "Timer32_HAL.d" \
 "UART_HAL.d" \
@@ -56,6 +66,8 @@ C_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../ButtonLED_HAL.c" \
 "../Farm.c" \
+"../Image.c" \
+"../PlotStatus_Update_HAL.c" \
 "../Proj2_main.c" \
 "../Timer32_HAL.c" \
 "../UART_HAL.c" \

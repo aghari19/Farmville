@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS
+CG_TOOL_ROOT := C:/Users/abarh/Desktop/ECE 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -12,6 +12,8 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./ButtonLED_HAL.obj" \
 "./Farm.obj" \
+"./Image.obj" \
+"./PlotStatus_Update_HAL.obj" \
 "./Proj2_main.obj" \
 "./Timer32_HAL.obj" \
 "./UART_HAL.obj" \
@@ -158,22 +160,22 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 Proj2.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=__MSP432P401R__ --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Proj2.map" --heap_size=1024 --stack_size=512 -i"C:/ti/ccsv8/ccs_base/arm/include" -i"C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/lib" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Proj2_linkInfo.xml" --rom_model -o "Proj2.out" $(ORDERED_OBJS)
+	"C:/Users/abarh/Desktop/ECE 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=__MSP432P401R__ --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Proj2.map" --heap_size=1024 --stack_size=512 -i"C:/Users/abarh/Desktop/ECE 2534/ccsv8/ccs_base/arm/include" -i"C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source" -i"C:/Users/abarh/Desktop/ECE 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/lib" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Proj2_linkInfo.xml" --rom_model -o "Proj2.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 Proj2.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/bin/armhex" --memwidth=8 --romwidth=8 -o "Proj2.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/Users/abarh/Desktop/ECE 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/bin/armhex" --memwidth=8 --romwidth=8 -o "Proj2.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "ButtonLED_HAL.obj" "Farm.obj" "Proj2_main.obj" "Timer32_HAL.obj" "UART_HAL.obj" "graphics_HAL.obj" "system_msp432p401r.obj" "LcdDriver\Crystalfontz128x128_ST7735.obj" "LcdDriver\HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.obj" "ccs\startup_msp432p401r_ccs.obj" "fonts\fontcmtt16.obj" 
-	-$(RM) "ButtonLED_HAL.d" "Farm.d" "Proj2_main.d" "Timer32_HAL.d" "UART_HAL.d" "graphics_HAL.d" "system_msp432p401r.d" "LcdDriver\Crystalfontz128x128_ST7735.d" "LcdDriver\HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.d" "ccs\startup_msp432p401r_ccs.d" "fonts\fontcmtt16.d" 
+	-$(RM) "ButtonLED_HAL.obj" "Farm.obj" "Image.obj" "PlotStatus_Update_HAL.obj" "Proj2_main.obj" "Timer32_HAL.obj" "UART_HAL.obj" "graphics_HAL.obj" "system_msp432p401r.obj" "LcdDriver\Crystalfontz128x128_ST7735.obj" "LcdDriver\HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.obj" "ccs\startup_msp432p401r_ccs.obj" "fonts\fontcmtt16.obj" 
+	-$(RM) "ButtonLED_HAL.d" "Farm.d" "Image.d" "PlotStatus_Update_HAL.d" "Proj2_main.d" "Timer32_HAL.d" "UART_HAL.d" "graphics_HAL.d" "system_msp432p401r.d" "LcdDriver\Crystalfontz128x128_ST7735.d" "LcdDriver\HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.d" "ccs\startup_msp432p401r_ccs.d" "fonts\fontcmtt16.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

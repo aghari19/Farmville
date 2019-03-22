@@ -3,8 +3,9 @@
 #include "Farm.h"
 
 // Initialize the
-void Farm_init(farm_t *farm) {
-
+void Farm_init(farm_t *farm)
+{
+    int i;
     // Farm starts with  full money
     farm->Money = 3;
     farm->MonthsPassed = 0;
@@ -12,8 +13,13 @@ void Farm_init(farm_t *farm) {
 
     // Remains Zero Until Planting
     farm->CropHealth = 0;
+    farm->Difficulty = 'E';
 
-    // complete this function once you have more members for the farm struct
-
+    for(i=0; i<=5; i++)
+    {
+        farm->Plots[i].Age = 0;
+        farm->Plots[i].Health = 0;
+        farm->Plots[i].Hydration = 0;
+    }
 }
 

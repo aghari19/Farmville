@@ -3,14 +3,14 @@
 Proj2_main.obj: ../Proj2_main.c
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/driverlib.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/adc14.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdint.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/stdint.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/cdefs.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_types.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_types.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_stdint.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_stdint.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdbool.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdint.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/stdint.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/cdefs.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_types.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_types.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_stdint.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_stdint.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdbool.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp432p401r.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp_compatibility.h
@@ -48,24 +48,28 @@ Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp43
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/sysctl.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/flash.h
 Proj2_main.obj: C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/grlib/grlib.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/assert.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/_ti_config.h
-Proj2_main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/linkage.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/assert.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/_ti_config.h
+Proj2_main.obj: C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/linkage.h
 Proj2_main.obj: ../graphics_HAL.h
-Proj2_main.obj: ../UART_HAL.h
 Proj2_main.obj: ../Farm.h
+Proj2_main.obj: ../UART_HAL.h
+Proj2_main.obj: ../ButtonLED_HAL.h
+Proj2_main.obj: ../Timer32_HAL.h
+Proj2_main.obj: ../PlotStatus_Update_HAL.h
+Proj2_main.obj: ../UART_HAL.h
 
 ../Proj2_main.c: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/driverlib.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/adc14.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdint.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/stdint.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/cdefs.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_types.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_types.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_stdint.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_stdint.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdbool.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdint.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/stdint.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/cdefs.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_types.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_types.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/machine/_stdint.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/sys/_stdint.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/stdbool.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp432p401r.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/inc/msp_compatibility.h: 
@@ -103,9 +107,13 @@ C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/sysctl.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/devices/msp432p4xx/driverlib/flash.h: 
 C:/ti/simplelink_msp432p4_sdk_2_40_00_10/source/ti/grlib/grlib.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/assert.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/_ti_config.h: 
-C:/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/linkage.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/assert.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/_ti_config.h: 
+C:/Users/abarh/Desktop/ECE\ 2534/ccsv8/tools/compiler/ti-cgt-arm_18.1.5.LTS/include/linkage.h: 
 ../graphics_HAL.h: 
-../UART_HAL.h: 
 ../Farm.h: 
+../UART_HAL.h: 
+../ButtonLED_HAL.h: 
+../Timer32_HAL.h: 
+../PlotStatus_Update_HAL.h: 
+../UART_HAL.h: 
