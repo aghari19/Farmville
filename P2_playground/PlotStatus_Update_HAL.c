@@ -153,7 +153,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[0].Health--;
         if(farm->Plots[0].Hydration != 0)
             farm->Plots[0].Hydration--;
-        if(farm->Plots[0].Age != 9)
             farm->Plots[0].Age++;
 
         int8_t Health[2];
@@ -186,7 +185,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[1].Health--;
         if(farm->Plots[1].Hydration != 0)
             farm->Plots[1].Hydration--;
-        if(farm->Plots[1].Age != 9)
             farm->Plots[1].Age++;
 
         int8_t Health[2];
@@ -220,7 +218,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[2].Health--;
         if(farm->Plots[2].Hydration != 0)
             farm->Plots[2].Hydration--;
-        if(farm->Plots[2].Age != 9)
             farm->Plots[2].Age++;
 
         int8_t Health[2];
@@ -254,7 +251,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[3].Health--;
         if(farm->Plots[3].Hydration != 0)
             farm->Plots[3].Hydration--;
-        if(farm->Plots[3].Age != 9)
             farm->Plots[3].Age++;
 
         int8_t Health[2];
@@ -288,7 +284,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[4].Health--;
         if(farm->Plots[4].Hydration != 0)
             farm->Plots[4].Hydration--;
-        if(farm->Plots[4].Age != 9)
             farm->Plots[4].Age++;
 
         int8_t Health[2];
@@ -322,7 +317,6 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
             farm->Plots[5].Health--;
         if(farm->Plots[5].Hydration != 0)
             farm->Plots[5].Hydration--;
-        if(farm->Plots[5].Age != 9)
             farm->Plots[5].Age++;
 
         int8_t Health[2];
@@ -599,30 +593,6 @@ void changeHydration(farm_t *farm,Graphics_Rectangle R,uint8_t entered,Graphics_
     }
 }
 
-
-void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
-{
-    if(farm->Difficulty == 'E')
-    {
-        farm->Difficulty = 'M';
-        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud19200);
-    }
-    else if(farm->Difficulty == 'M')
-    {
-        farm->Difficulty = 'H';
-        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud57600);
-    }
-}
-
-int update(farm_t *farm, bool Change, Graphics_Rectangle R,Graphics_Context *g_sContext_p )
-{
-    if(Change == true)
-    {
-        changeStatus(farm,g_sContext_p);
-    }
-    return checkStatus(farm,g_sContext_p);
-}
-
 void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
 {
     if((R->xMax == 40))
@@ -723,8 +693,25 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
         Graphics_fillRectangle(g_sContext_p,&Rec);
     }
 }
+void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
+{
+    if(farm->Difficulty == 'E')
+    {
+        farm->Difficulty = 'M';
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud19200);
+    }
+    else if(farm->Difficulty == 'M')
+    {
+        farm->Difficulty = 'H';
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud57600);
+    }
+}
 
-
-
-
-
+int update(farm_t *farm, bool Change, Graphics_Rectangle R,Graphics_Context *g_sContext_p )
+{
+    if(Change == true)
+    {
+        changeStatus(farm,g_sContext_p);
+    }
+    return checkStatus(farm,g_sContext_p);
+}

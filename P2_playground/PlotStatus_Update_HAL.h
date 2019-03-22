@@ -11,6 +11,9 @@
 #include "Farm.h"
 #include "UART_HAL.h"
 
+#define LOAD_E 24000000
+#define LOAD_M 16000000
+#define LOAD_H 8000000
 
 void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p );
 
