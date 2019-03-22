@@ -50,16 +50,16 @@ void UARTPutChar(uint32_t moduleInstance, uint8_t tChar)
     UART_transmitData(moduleInstance, tChar);
 }
 
-void UARTSetBaud(uint32_t moduleInstance, eUSCI_UART_Config *uartConfig_p, UARTBaudRate_t newBaud)
+void UARTSetBaud(uint32_t moduleInstance, eUSCI_UART_Config *uartConfig_p, int newBaud)
 {
-    if(newBaud == baud19200)
+    if(newBaud == 19200)
     {
         uartConfig_p->clockPrescalar = 156;
         uartConfig_p->firstModReg = 4;
         uartConfig_p->secondModReg = 0x00;
         UpdateUART(moduleInstance, uartConfig_p);
     }
-    else if(newBaud == baud57600)
+    else if(newBaud == 57600)
     {
         uartConfig_p->clockPrescalar = 52;
         uartConfig_p->firstModReg = 1;

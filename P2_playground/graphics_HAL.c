@@ -1,8 +1,11 @@
 #include <ti/grlib/grlib.h>
 #include "LcdDriver/Crystalfontz128x128_ST7735.h"
 
-#include "Farm.h"
 #include "graphics_HAL.h"
+#include "UART_HAL.h"
+#include "ButtonLED_HAL.h"
+#include "Timer32_HAL.h"
+#include "Farm.h"
 
 // This function is not used in upper level functions, so it does not need to be declared in the graphics_HAL.h
 void InitFonts()
@@ -279,16 +282,16 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
 }
 
-bool isEmptyDead(Graphics_Rectangle *R, farm_t *farm)
+bool isEmptyDead(Graphics_Rectangle R, farm_t *farm)
 {
-    if((R->xMax == 40) && (R->yMax == 60))
+    if((R.xMax == 40) && (R.yMax == 60))
         {
             if((farm->Plots[0].Health == 0) && (farm->Plots[0].Age != 0))
                 return true;
             else
                 return false;
         }
-        else if((R->xMax == 80) && (R->yMax == 60))
+        /*else if((R->xMax == 80) && (R->yMax == 60))
         {
             if((farm->Plots[1].Health == 0) && (farm->Plots[1].Age != 0))
                 return true;
@@ -320,30 +323,30 @@ bool isEmptyDead(Graphics_Rectangle *R, farm_t *farm)
         }
         else if ((R->xMax == 120) && (R->yMax == 100))
         {
-            if((farm->Plots[5].Age == 0) && (farm->Plots[5].Health == 0)&& (farm->Plots[5].Age != 0))
+            if((farm->Plots[5].Health == 0) && (farm->Plots[5].Age != 0))
                 return true;
             else
                 return false;
-        }
+        }*/
 }
 
-bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
+bool isEmpty(Graphics_Rectangle R, farm_t *farm )
 {
-    if((R->xMax == 40) && (R->yMax == 60))
+    if((R.xMax == 40) && (R.yMax == 60))
     {
         if((farm->Plots[0].Age == 0) && (farm->Plots[0].Health == 0))
             return true;
         else
             return false;
     }
-    else if((R->xMax == 80) && (R->yMax == 60))
+    else if((R.xMax == 80) && (R.yMax == 60))
     {
         if((farm->Plots[1].Age == 0) && (farm->Plots[1].Health == 0))
             return true;
         else
             return false;
     }
-    else if((R->xMax == 120) && (R->yMax == 60))
+    else if((R.xMax == 120) && (R.yMax == 60))
     {
         if((farm->Plots[2].Age == 0) && (farm->Plots[2].Health == 0))
             return true;
@@ -351,7 +354,7 @@ bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
             return false;
 
     }
-    else if ((R->xMax == 40) && (R->yMax == 100))
+    else if ((R.xMax == 40) && (R.yMax == 100))
     {
         if((farm->Plots[3].Age == 0) && (farm->Plots[3].Health == 0))
             return true;
@@ -359,20 +362,21 @@ bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
             return false;
 
     }
-    else if ((R->xMax == 80) && (R->yMax == 100))
+    else if ((R.xMax == 80) && (R.yMax == 100))
     {
         if((farm->Plots[4].Age == 0) && (farm->Plots[4].Health == 0))
             return true;
         else
             return false;
     }
-    else if ((R->xMax == 120) && (R->yMax == 100))
+    else if ((R.xMax == 120) && (R.yMax == 100))
     {
         if((farm->Plots[5].Age == 0) && (farm->Plots[5].Health == 0))
             return true;
         else
             return false;
     }
+
 }
 
 void Ready(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
@@ -563,7 +567,6 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         //farm->Plots[0].Age = 0;
         farm->Plots[0].Health = 0;
         //farm->Plots[0].Hydration = 0;
-
     }
     else if ((R.xMax == 80) && (R.yMax == 60))
     {

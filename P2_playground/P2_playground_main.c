@@ -6,6 +6,7 @@
 #include "ButtonLED_HAL.h"
 #include "Timer32_HAL.h"
 #include "Farm.h"
+#include "PlotStatus_Update_HAL.h"
 
 #define LOAD_E 24000000
 #define LOAD_M 16000000
@@ -87,7 +88,7 @@ int main(void)
                         movePlots(&R, rChar, &g_sContext);
                         break;
             case 'p':
-                        if (isEmpty(&R, &farm) && (farm.Money>0))
+                        if (isEmpty(R, &farm) && (farm.Money>0))
                         {
                             plotted = 1;
                             plots(R,&farm,&g_sContext);
@@ -95,32 +96,32 @@ int main(void)
                             display(&g_sContext, timeString, MoneyString, HealthString,
                                      DifficultyString);
                             Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
-                                    farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                                    farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,&g_sContext);
                             DrawHealth(&g_sContext, HealthString, Health);
                             pressed = true;
                         }
                         break;
             case 'r':
-                        if((pressed == true) | !(isEmpty(&R, &farm)) && !(isEmptyDead(&R, &farm)))
+                        if((pressed == true) | !(isEmpty(R, &farm)) && !(isEmptyDead(R, &farm)))
                         {
                             changeHydration(&farm,R,rChar,&g_sContext);
                         }
                         break;
             case 't':
-                        if(isEmptyDead(&R, &farm))
+                        if(isEmptyDead(R, &farm))
                         {
-                          reset(&farm,&R,&g_sContext);
+                          reset(&farm,&g_sContext,R);
                         }
-                        else if((pressed == true) | !(isEmpty(&R, &farm)))
+                        else if((pressed == true) | !(isEmpty(R, &farm)))
                         {
                                 changeHealth(&farm,R,rChar,&g_sContext);
                                 Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
-                                           farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                                           farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,&g_sContext );
                                 DrawHealth(&g_sContext, HealthString, Health);
                         }
                         break;
             case 'h':
-                        if((pressed == true) | !(isEmpty(&R, &farm)))
+                        if((pressed == true) | !(isEmpty(R, &farm)))
                         {
                             Harvest(&farm,&R,&g_sContext);
                         }
@@ -142,12 +143,12 @@ int main(void)
                 break;
             }
             Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
-                       farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                       farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,&g_sContext );
             DrawHealth(&g_sContext, HealthString, Health);
         }
         if((monthChange == true))
         {
-            int no_live_plots = update(&farm, monthChange ,R,&g_sContext );
+            int no_live_plots = update(&farm, monthChange,&g_sContext );
             Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
                     farm.Plots[4].Health+farm.Plots[5].Health)/no_live_plots;
             DrawHealth(&g_sContext, HealthString, Health);
@@ -157,7 +158,6 @@ int main(void)
         if((plotted == 1) && (Health == 0) && (farm.Money == 0))
         {
             break;
-
         }
     }
     Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_RED);

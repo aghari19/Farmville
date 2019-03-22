@@ -25,8 +25,8 @@ void changeHealth(farm_t *farm,Graphics_Rectangle R,uint8_t entered,Graphics_Con
 
 void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p);
 
-int update(farm_t *farm, bool Change, Graphics_Rectangle R,Graphics_Context *g_sContext_p );
+int update(farm_t *farm, bool Change,Graphics_Context *g_sContext_p );
 
-void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R);
+void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R);
 
 #endif /* PLOTSTATUS_UPDATE_HAL_H_ */

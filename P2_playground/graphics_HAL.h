@@ -23,7 +23,7 @@ void DrawTime(Graphics_Context *g_sContext_p, int8_t *timeString);
 
 void DrawHealth(Graphics_Context *g_sContext_p, int8_t *HealthString, int Health);
 
-bool isEmpty(Graphics_Rectangle *R, farm_t *farm);
+bool isEmpty(Graphics_Rectangle R, farm_t *farm);
 
-bool isEmptyDead(Graphics_Rectangle *R, farm_t *farm);
+bool isEmptyDead(Graphics_Rectangle R, farm_t *farm);
 

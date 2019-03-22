@@ -8,7 +8,11 @@
 #include <ti/grlib/grlib.h>
 #include "LcdDriver/Crystalfontz128x128_ST7735.h"
 
-#include "PlotStatus_Update_HAL.h"
+#include "graphics_HAL.h"
+#include "UART_HAL.h"
+#include "ButtonLED_HAL.h"
+#include "Timer32_HAL.h"
+#include "Farm.h"
 
 int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
 {
@@ -18,7 +22,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        R.xMin = 0;
        R.yMax = 60;
        R.yMin = 20;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
             if((farm->Plots[0].Age > 2) && (farm->Plots[0].Age < 9) &&
@@ -38,7 +42,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        }
        R.xMax = 80;
        R.yMax = 60;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
            if((farm->Plots[1].Age > 2) && (farm->Plots[1].Age < 9) &&
@@ -58,7 +62,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        }
        R.xMax = 120;
        R.yMax = 60;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
            if((farm->Plots[2].Age > 2) && (farm->Plots[2].Age < 9) &&
@@ -78,7 +82,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        }
        R.xMax = 40;
        R.yMax = 100;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
            if((farm->Plots[3].Age > 2) && (farm->Plots[3].Age < 9) &&
@@ -98,7 +102,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        }
        R.xMax = 80;
        R.yMax = 100;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
            if((farm->Plots[4].Age > 2) && (farm->Plots[4].Age < 9) &&
@@ -118,7 +122,7 @@ int checkStatus(farm_t *farm,Graphics_Context *g_sContext_p)
        }
        R.xMax = 120;
        R.yMax = 100;
-       if(!isEmpty(&R, farm))
+       if(!isEmpty(R, farm))
        {
            i++;
            if((farm->Plots[5].Age > 2) && (farm->Plots[5].Age < 9) &&
@@ -147,7 +151,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     R.xMin = 0;
     R.yMax = 60;
     R.yMin = 20;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[0].Health != 0)
             farm->Plots[0].Health--;
@@ -179,7 +183,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     }
     R.xMax = 80;
     R.yMax = 60;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[1].Health != 0)
             farm->Plots[1].Health--;
@@ -212,7 +216,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     }
     R.xMax = 120;
     R.yMax = 60;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[2].Health != 0)
             farm->Plots[2].Health--;
@@ -245,7 +249,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     }
     R.xMax = 40;
     R.yMax = 100;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[3].Health != 0)
             farm->Plots[3].Health--;
@@ -278,7 +282,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     }
     R.xMax = 80;
     R.yMax = 100;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[4].Health != 0)
             farm->Plots[4].Health--;
@@ -311,7 +315,7 @@ void changeStatus(farm_t *farm,Graphics_Context *g_sContext_p )
     }
     R.xMax = 120;
     R.yMax = 100;
-    if(!isEmpty(&R, farm))
+    if(!isEmpty(R, farm))
     {
         if(farm->Plots[5].Health != 0)
             farm->Plots[5].Health--;
@@ -593,9 +597,9 @@ void changeHydration(farm_t *farm,Graphics_Rectangle R,uint8_t entered,Graphics_
     }
 }
 
-void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
+void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R)
 {
-    if((R->xMax == 40))
+    if((R.xMax == 40) && (R.yMax == 60))
     {
         turnOn_LaunchpadLED2_blue();
         farm->Plots[0].Age = 0;
@@ -610,8 +614,9 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
 
         Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
         Graphics_fillRectangle(g_sContext_p,&Rec);
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_WHITE);
     }
-    else if((R->xMax == 80) && (R->yMax == 60))
+    else if((R.xMax == 80) && (R.yMax == 60))
     {
         turnOn_LaunchpadLED2_green();
         farm->Plots[1].Age = 0;
@@ -627,7 +632,7 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
         Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
         Graphics_fillRectangle(g_sContext_p,&Rec);
     }
-    else if((R->xMax == 120) && (R->yMax == 60))
+    else if((R.xMax == 120) && (R.yMax == 60))
     {
         turnOn_BoosterpackLED_red();
         farm->Plots[2].Age = 0;
@@ -644,7 +649,7 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
         Graphics_fillRectangle(g_sContext_p,&Rec);
 
     }
-    else if((R->xMax == 40) && (R->yMax == 100))
+    else if((R.xMax == 40) && (R.yMax == 100))
     {
         turnOn_BoosterpackLED_green();
         farm->Plots[3].Age = 0;
@@ -660,7 +665,7 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
         Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
         Graphics_fillRectangle(g_sContext_p,&Rec);
     }
-    else if((R->xMax == 80) && (R->yMax == 100))
+    else if((R.xMax == 80) && (R.yMax == 100))
     {
         turnOn_BoosterpackLED_blue();
         farm->Plots[4].Age = 0;
@@ -677,7 +682,7 @@ void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
         Graphics_fillRectangle(g_sContext_p,&Rec);
 
     }
-    else if((R->xMax == 120) && (R->yMax == 100))
+    else if((R.xMax == 120) && (R.yMax == 100))
     {
         farm->Plots[5].Age = 0;
         farm->Plots[5].Health = 0;
@@ -698,16 +703,16 @@ void ChangeDifficulty(farm_t *farm, eUSCI_UART_Config *uartConfig_p)
     if(farm->Difficulty == 'E')
     {
         farm->Difficulty = 'M';
-        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud19200);
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, 19200);
     }
     else if(farm->Difficulty == 'M')
     {
         farm->Difficulty = 'H';
-        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, baud57600);
+        UARTSetBaud(EUSCI_A0_BASE, uartConfig_p, 57600);
     }
 }
 
-int update(farm_t *farm, bool Change, Graphics_Rectangle R,Graphics_Context *g_sContext_p )
+int update(farm_t *farm, bool Change,Graphics_Context *g_sContext_p )
 {
     if(Change == true)
     {
