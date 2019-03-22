@@ -974,3 +974,12 @@ void DrawHealth(Graphics_Context *g_sContext_p, int8_t *HealthString, int Health
     Graphics_drawString(g_sContext_p, HealthString, -1, 10, 115, true);
 
 }
+
+void drawGameOver(Graphics_Context *g_sContext_p,Graphics_Image *Image)
+{
+    Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_RED);
+    Graphics_drawImage(g_sContext_p, Image, 0, 0);
+    int8_t Over[12] = "!GAME OVER!";
+    Graphics_drawString(g_sContext_p, Over, -1, 25, 100, false);
+}
+

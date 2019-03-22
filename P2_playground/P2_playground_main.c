@@ -1,3 +1,7 @@
+/*
+ * Note: The comments for all the methods except the main method are written in the respective .h files.
+ */
+
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/grlib/grlib.h>
 
@@ -14,9 +18,8 @@
 
 extern Graphics_Image Jon_Bunting8BPP_UNCOMP;
 
+//This method initializes the timer
 void initialize();
-void Commands(uint8_t rChar, Graphics_Rectangle *R, Graphics_Context *g_sContext, farm_t *farm,
-              eUSCI_UART_Config *uartConfig, int8_t *timeString,int8_t *MoneyString,int8_t *HealthString,int8_t *DifficultyString);
 
 int main(void)
 {
@@ -48,6 +51,8 @@ int main(void)
     int LoadValue = LOAD_E;
     int Health;
     int plotted=0;
+
+    //This in the first loop the program encounters and is run until the first character is encountered
     while (waiting)
     {
         if(UARTHasChar(EUSCI_A0_BASE))
@@ -58,6 +63,7 @@ int main(void)
     }
     display(&g_sContext, timeString, MoneyString, HealthString,
                         DifficultyString);
+    //This is the Loop that runs the game
     while (1)
     {
         Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_GREEN);
@@ -160,10 +166,8 @@ int main(void)
             break;
         }
     }
-    Graphics_setForegroundColor(&g_sContext, GRAPHICS_COLOR_RED);
-    Graphics_drawImage(&g_sContext, &Jon_Bunting8BPP_UNCOMP, 0, 0);
-    int8_t Over[12] = "!GAME OVER!";
-    Graphics_drawString(&g_sContext, Over, -1, 25, 100, false);
+    drawGameOver(&g_sContext, &Jon_Bunting8BPP_UNCOMP);
+
 }
 void initialize()
 {

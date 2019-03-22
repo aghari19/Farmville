@@ -10,29 +10,25 @@ typedef struct
 	int Health;
 	int Hydration;
 
-	// add more members if you need
 } plot_t;
 
-
-// Farm struct represents the collection of all of the plots and the properties of the farm
+//Farm Struct
 typedef struct
 {
 	plot_t Plots[6];
+
 	int Money;
+
 	int MonthsPassed;
 	int DaysPassed;
-	int CropHealth;
-	char Difficulty;
 
-	// add more members if you need
+	int CropHealth;//Average crop health
+
+	char Difficulty;//The difficulty level
+
 } farm_t;
 
 // Initialize the farm struct
 void Farm_init(farm_t *farm);
-
-// declare farm manipulation and plot manipulation functions here and then, implement them in farm.c
-
-
-
 
 #endif
