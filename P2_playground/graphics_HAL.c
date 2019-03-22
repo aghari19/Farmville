@@ -279,6 +279,54 @@ void plots(Graphics_Rectangle R,farm_t *farm ,Graphics_Context *g_sContext_p)
     }
 }
 
+bool isEmptyDead(Graphics_Rectangle *R, farm_t *farm)
+{
+    if((R->xMax == 40) && (R->yMax == 60))
+        {
+            if((farm->Plots[0].Health == 0) && (farm->Plots[0].Age != 0))
+                return true;
+            else
+                return false;
+        }
+        else if((R->xMax == 80) && (R->yMax == 60))
+        {
+            if((farm->Plots[1].Health == 0) && (farm->Plots[1].Age != 0))
+                return true;
+            else
+                return false;
+        }
+        else if((R->xMax == 120) && (R->yMax == 60))
+        {
+            if((farm->Plots[2].Health == 0) && (farm->Plots[2].Age != 0))
+                return true;
+            else
+                return false;
+
+        }
+        else if ((R->xMax == 40) && (R->yMax == 100))
+        {
+            if((farm->Plots[3].Health == 0) && (farm->Plots[3].Age != 0))
+                return true;
+            else
+                return false;
+
+        }
+        else if ((R->xMax == 80) && (R->yMax == 100))
+        {
+            if((farm->Plots[4].Health == 0)&& (farm->Plots[4].Age != 0))
+                return true;
+            else
+                return false;
+        }
+        else if ((R->xMax == 120) && (R->yMax == 100))
+        {
+            if((farm->Plots[5].Age == 0) && (farm->Plots[5].Health == 0)&& (farm->Plots[5].Age != 0))
+                return true;
+            else
+                return false;
+        }
+}
+
 bool isEmpty(Graphics_Rectangle *R, farm_t *farm )
 {
     if((R->xMax == 40) && (R->yMax == 60))
@@ -512,9 +560,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 10, 36, 44);
         Graphics_drawLineV(g_sContext_p, 20, 36, 44);
         Graphics_drawLineV(g_sContext_p, 30, 36, 44);
-        farm->Plots[0].Age = 0;
+        //farm->Plots[0].Age = 0;
         farm->Plots[0].Health = 0;
-        farm->Plots[0].Hydration = 0;
+        //farm->Plots[0].Hydration = 0;
 
     }
     else if ((R.xMax == 80) && (R.yMax == 60))
@@ -534,9 +582,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 50, 36, 44);
         Graphics_drawLineV(g_sContext_p, 60, 36, 44);
         Graphics_drawLineV(g_sContext_p, 70, 36, 44);
-        farm->Plots[1].Age = 0;
+        //farm->Plots[1].Age = 0;
         farm->Plots[1].Health = 0;
-        farm->Plots[1].Hydration = 0;
+        //farm->Plots[1].Hydration = 0;
     }
     else if ((R.xMax == 120) && (R.yMax == 60))
     {
@@ -555,9 +603,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 90, 36, 44);
         Graphics_drawLineV(g_sContext_p, 100, 36, 44);
         Graphics_drawLineV(g_sContext_p, 110, 36, 44);
-        farm->Plots[2].Age = 0;
+        //farm->Plots[2].Age = 0;
         farm->Plots[2].Health = 0;
-        farm->Plots[2].Hydration = 0;
+        //farm->Plots[2].Hydration = 0;
     }
     else if ((R.xMax == 40) && (R.yMax == 100))
     {
@@ -575,9 +623,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 10, 76, 84);
         Graphics_drawLineV(g_sContext_p, 20, 76, 84);
         Graphics_drawLineV(g_sContext_p, 30, 76, 84);
-        farm->Plots[3].Age = 0;
+        //farm->Plots[3].Age = 0;
         farm->Plots[3].Health = 0;
-        farm->Plots[3].Hydration = 0;
+        //farm->Plots[3].Hydration = 0;
     }
     else if ((R.xMax == 80) && (R.yMax == 100))
     {
@@ -595,9 +643,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 50, 76, 84);
         Graphics_drawLineV(g_sContext_p, 60, 76, 84);
         Graphics_drawLineV(g_sContext_p, 70, 76, 84);
-        farm->Plots[4].Age = 0;
+        //farm->Plots[4].Age = 0;
         farm->Plots[4].Health = 0;
-        farm->Plots[4].Hydration = 0;
+        //farm->Plots[4].Hydration = 0;
     }
     else if ((R.xMax == 120) && (R.yMax == 100))
     {
@@ -615,9 +663,9 @@ void Dead(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle R )
         Graphics_drawLineV(g_sContext_p, 90, 76, 84);
         Graphics_drawLineV(g_sContext_p, 100, 76, 84);
         Graphics_drawLineV(g_sContext_p, 110, 76, 84);
-        farm->Plots[5].Age = 0;
+        //farm->Plots[5].Age = 0;
         farm->Plots[5].Health = 0;
-        farm->Plots[5].Hydration = 0;
+        //farm->Plots[5].Hydration = 0;
     }
 }
 

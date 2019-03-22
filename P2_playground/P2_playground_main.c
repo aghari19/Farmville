@@ -101,18 +101,25 @@ int main(void)
                         }
                         break;
             case 'r':
-                        if((pressed == true) | !(isEmpty(&R, &farm)))
+                        if((pressed == true) | !(isEmpty(&R, &farm)) && !(isEmptyDead(&R, &farm)))
                         {
                             changeHydration(&farm,R,rChar,&g_sContext);
                         }
                         break;
             case 't':
-                        if((pressed == true) | !(isEmpty(&R, &farm)))
+                        if(isEmptyDead(&R, &farm))
                         {
-                            changeHealth(&farm,R,rChar,&g_sContext);
-                            Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
-                                       farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
-                            DrawHealth(&g_sContext, HealthString, Health);
+                          reset(&farm,&R,&g_sContext);
+                        }
+                        else
+                        {
+                            if((pressed == true) | !(isEmpty(&R, &farm)))
+                            {
+                                changeHealth(&farm,R,rChar,&g_sContext);
+                                Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
+                                           farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+                                DrawHealth(&g_sContext, HealthString, Health);
+                            }
                         }
                         break;
             case 'h':
@@ -137,6 +144,9 @@ int main(void)
                                 DifficultyString);
                 break;
             }
+            Health = (farm.Plots[0].Health+farm.Plots[1].Health+farm.Plots[2].Health+farm.Plots[3].Health+
+                       farm.Plots[4].Health+farm.Plots[5].Health)/update(&farm,false,R,&g_sContext );
+            DrawHealth(&g_sContext, HealthString, Health);
         }
         if((monthChange == true))
         {
@@ -161,5 +171,15 @@ int main(void)
 void initialize()
 {
     WDT_A_hold(WDT_A_BASE);
+    initialize_LaunchpadLED2_green();
+    turnOff_LaunchpadLED2_green();
+    initialize_LaunchpadLED2_blue();
+    initialize_BoosterpackLED_red();
+    initialize_BoosterpackLED_green();
+    initialize_BoosterpackLED_blue();
+    turnOff_LaunchpadLED2_blue();
+    turnOff_BoosterpackLED_red();
+    turnOff_BoosterpackLED_green();
+    turnOff_BoosterpackLED_blue();
     InitTimer();
 }

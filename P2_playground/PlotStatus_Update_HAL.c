@@ -623,6 +623,106 @@ int update(farm_t *farm, bool Change, Graphics_Rectangle R,Graphics_Context *g_s
     return checkStatus(farm,g_sContext_p);
 }
 
+void reset(farm_t *farm,Graphics_Context *g_sContext_p,Graphics_Rectangle *R)
+{
+    if((R->xMax == 40))
+    {
+        turnOn_LaunchpadLED2_blue();
+        farm->Plots[0].Age = 0;
+        farm->Plots[0].Health = 0;
+        farm->Plots[0].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 1;
+        Rec.xMax = 39;
+        Rec.yMin = 21;
+        Rec.yMax = 59;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+    }
+    else if((R->xMax == 80) && (R->yMax == 60))
+    {
+        turnOn_LaunchpadLED2_green();
+        farm->Plots[1].Age = 0;
+        farm->Plots[1].Health = 0;
+        farm->Plots[1].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 41;
+        Rec.xMax = 79;
+        Rec.yMin = 21;
+        Rec.yMax = 59;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+    }
+    else if((R->xMax == 120) && (R->yMax == 60))
+    {
+        turnOn_BoosterpackLED_red();
+        farm->Plots[2].Age = 0;
+        farm->Plots[2].Health = 0;
+        farm->Plots[2].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 81;
+        Rec.xMax = 119;
+        Rec.yMin = 21;
+        Rec.yMax = 59;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+
+    }
+    else if((R->xMax == 40) && (R->yMax == 100))
+    {
+        turnOn_BoosterpackLED_green();
+        farm->Plots[3].Age = 0;
+        farm->Plots[3].Health = 0;
+        farm->Plots[3].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 1;
+        Rec.xMax = 39;
+        Rec.yMin = 61;
+        Rec.yMax = 99;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+    }
+    else if((R->xMax == 80) && (R->yMax == 100))
+    {
+        turnOn_BoosterpackLED_blue();
+        farm->Plots[4].Age = 0;
+        farm->Plots[4].Health = 0;
+        farm->Plots[4].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 41;
+        Rec.xMax = 79;
+        Rec.yMin = 61;
+        Rec.yMax = 99;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+
+    }
+    else if((R->xMax == 120) && (R->yMax == 100))
+    {
+        farm->Plots[5].Age = 0;
+        farm->Plots[5].Health = 0;
+        farm->Plots[5].Hydration = 0;
+
+        Graphics_Rectangle Rec;
+        Rec.xMin = 81;
+        Rec.xMax = 119;
+        Rec.yMin = 61;
+        Rec.yMax = 99;
+
+        Graphics_setForegroundColor(g_sContext_p, GRAPHICS_COLOR_BLACK);
+        Graphics_fillRectangle(g_sContext_p,&Rec);
+    }
+}
 
 
 
